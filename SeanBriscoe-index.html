@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Api Access</h1>
+    <button id =  'commitbutton'>VueCommits</button>
+    <div id = 'divResult'>
+
+    </div>
+    <script>
+        const btnCommits = document.getElementById("commitbutton")
+        const divResult = document.getElementById("divResult")
+        commitbutton.addEventListener("click", getCommits)
+        async function getCommits() {
+      
+        const url = "https://api.github.com/search/commits?q=repo:vuejs/vue author-date:2019-01-01..2019-12-31"
+        const headers = {
+
+                "Accept" : "application/vnd.github.cloak.preview"
+            }
+        const response = await fetch(url,{
+            "method" : "GET",
+            "headers" : headers
+        })
+        const result = await response.json()
+
+        result.items.forEach(i=>{
+
+            const anchor = document.createElement("a")
+            anchor.href = i.html_url;
+            anchor.textContent = i.full_name;
+            divResult.appendChild(anchor)
+            divResult.appendChild(document.createElement("br"))
+
+
+        })
+    }
+    </script>
+</body>
+</html>
